@@ -1,0 +1,1379 @@
+{
+  "meta": {
+    "compiled": "2026-10-07",
+    "conventions": "USD nominal unless noted. 'DERIVED' marks values computed by the researcher from cited inputs (method in note) rather than taken directly from a source. Chart-read values (Lazard illustrative markers, LBNL duration medians) are approximate. Regional solar_cf/wind_cf are Lazard 2026 regional assumptions for six ISOs (null where unavailable). gas_price_usd_mmbtu = EIA 2024 delivered price to electric power in a representative state, converted at ~1.036 MMBtu/Mcf; 2024 was an unusually low-price year. grid_carbon = eGRID2023 total output CO2e rate (lb/MWh x 0.4536), generation-weighted across subregions where noted. Resource ratings: hydro by eGRID hydro share (>15% good, 3-15% fair, <3% poor); geothermal good where geothermal is >2% of eGRID generation, fair where present or EGS activity is nearby, else poor (judgment)."
+  },
+  "sources": [
+    {
+      "id": "lazard2026",
+      "title": "Levelized Cost of Energy+ (LCOE v19.0, LCOS v11.0)",
+      "publisher": "Lazard",
+      "year": 2026,
+      "url": "https://www.lazard.com/media/kcfconhf/lazards-lcoeplus_vf.pdf"
+    },
+    {
+      "id": "doe_lbnl2024",
+      "title": "DOE Releases New Report Evaluating Increase in Electricity Demand from Data Centers (LBNL 2024 US Data Center Energy Usage Report)",
+      "publisher": "U.S. Department of Energy / Lawrence Berkeley National Laboratory",
+      "year": 2024,
+      "url": "https://www.energy.gov/articles/doe-releases-new-report-evaluating-increase-electricity-demand-data-centers"
+    },
+    {
+      "id": "iea2025",
+      "title": "IEA Energy and AI report coverage (AI to drive surging data centre electricity demand)",
+      "publisher": "American Public Power Association (reporting on IEA Energy and AI, Apr 2025)",
+      "year": 2025,
+      "url": "https://www.publicpower.org/node/25259"
+    },
+    {
+      "id": "lbnl_queued2025",
+      "title": "Queued Up: 2025 Edition (data through end of 2024)",
+      "publisher": "Lawrence Berkeley National Laboratory",
+      "year": 2025,
+      "url": "https://emp.lbl.gov/sites/default/files/2025-12/Queued%20Up%202025%20Edition%20-%2012.15.2025.pdf"
+    },
+    {
+      "id": "eia_cf_nonfossil",
+      "title": "Electric Power Monthly Table 6.07.B Capacity Factors, Non-Fossil Fuels",
+      "publisher": "U.S. EIA",
+      "year": 2026,
+      "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_6_07_b"
+    },
+    {
+      "id": "eia_cf_fossil",
+      "title": "Electric Power Monthly Table 6.07.A Capacity Factors, Fossil Fuels",
+      "publisher": "U.S. EIA",
+      "year": 2026,
+      "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_6_07_a"
+    },
+    {
+      "id": "eia_ind_price",
+      "title": "Electric Power Monthly Table 5.6.B Average Price of Electricity by State, Year-to-Date (Jan-Jul 2026)",
+      "publisher": "U.S. EIA",
+      "year": 2026,
+      "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_b"
+    },
+    {
+      "id": "eia_gas_power_price",
+      "title": "Natural Gas Prices: Electric Power Consumers by State (annual)",
+      "publisher": "U.S. EIA",
+      "year": 2025,
+      "url": "https://www.eia.gov/dnav/ng/ng_pri_sum_a_EPG0_PEU_DMcf_a.htm"
+    },
+    {
+      "id": "eia_steo",
+      "title": "Short-Term Energy Outlook: Natural Gas (Oct 6, 2026)",
+      "publisher": "U.S. EIA",
+      "year": 2026,
+      "url": "https://www.eia.gov/outlooks/steo/report/natgas.php"
+    },
+    {
+      "id": "eia_co2coef",
+      "title": "Carbon Dioxide Emissions Coefficients",
+      "publisher": "U.S. EIA",
+      "year": 2024,
+      "url": "https://www.eia.gov/environment/emissions/co2_vol_mass.php"
+    },
+    {
+      "id": "eia_aeo2023_cost",
+      "title": "Cost and Performance Characteristics of New Generating Technologies, AEO2023",
+      "publisher": "U.S. EIA",
+      "year": 2023,
+      "url": "https://www.eia.gov/outlooks/aeo/assumptions/pdf/elec_cost_perf.pdf"
+    },
+    {
+      "id": "nrel_lca2021",
+      "title": "Life Cycle Greenhouse Gas Emissions from Electricity Generation: Update (fact sheet NREL/FS-6A50-80580)",
+      "publisher": "NREL",
+      "year": 2021,
+      "url": "https://docs.nlr.gov/docs/fy21osti/80580.pdf"
+    },
+    {
+      "id": "egrid2023",
+      "title": "eGRID2023 Summary Tables (rev2)",
+      "publisher": "U.S. EPA",
+      "year": 2025,
+      "url": "https://www.epa.gov/system/files/documents/2025-06/summary_tables_rev2.pdf"
+    },
+    {
+      "id": "lbnl_solar2025",
+      "title": "Utility-Scale Solar, 2025 Data Update (slides)",
+      "publisher": "Lawrence Berkeley National Laboratory",
+      "year": 2025,
+      "url": "https://emp.lbl.gov/sites/default/files/2025-10/Utility%20Scale%20Solar%202025%20Edition%20Slides.pdf"
+    },
+    {
+      "id": "lbnl_wind2026",
+      "title": "Land-Based Wind Energy Technology Update: 2026 Edition (figure file)",
+      "publisher": "Lawrence Berkeley National Laboratory",
+      "year": 2026,
+      "url": "https://eta-publications.lbl.gov/sites/default/files/2026-08/figure_file_land-based_wind_energy_technology_update_2026_edition.pdf"
+    },
+    {
+      "id": "ember2025",
+      "title": "Solar electricity every hour of every day is here and it changes everything (Ch. 3)",
+      "publisher": "Ember",
+      "year": 2025,
+      "url": "https://ember-energy.org/latest-insights/solar-electricity-every-hour-of-every-day-is-here-and-it-changes-everything/chapter-3-getting-close-to-24-365-solar-generation/"
+    },
+    {
+      "id": "constellation_crane",
+      "title": "Constellation to Launch Crane Clean Energy Center (Microsoft 20-year PPA)",
+      "publisher": "Constellation Energy",
+      "year": 2024,
+      "url": "http://www.constellationenergy.com/news/2024/Constellation-to-Launch-Crane-Clean-Energy-Center-Restoring-Jobs-and-Carbon-Free-Power-to-The-Grid.html"
+    },
+    {
+      "id": "wnn_crane_loan",
+      "title": "Constellation secures USD1 billion loan for reactor restart",
+      "publisher": "World Nuclear News",
+      "year": 2025,
+      "url": "https://world-nuclear-news.org/articles/constellation-secures-usd1-billion-loan-for-reactor-restart"
+    },
+    {
+      "id": "jefferies_crane",
+      "title": "Microsoft may pay Constellation premium in Three Mile Island power agreement, Jefferies says",
+      "publisher": "Investing.com",
+      "year": 2024,
+      "url": "https://investing.com/news/stock-market-news/microsoft-may-pay-constellation-premium-in-three-mile-island-power-agreement-jefferies-says-3628908"
+    },
+    {
+      "id": "constellation_meta",
+      "title": "Constellation, Meta Sign 20-Year Deal for Clean, Reliable Nuclear Energy in Illinois",
+      "publisher": "Constellation Energy",
+      "year": 2025,
+      "url": "https://www.constellationenergy.com/news/2025/constellation-meta-sign-20-year-deal-for-clean-reliable-nuclear-energy-in-illinois.html"
+    },
+    {
+      "id": "talen_amazon",
+      "title": "Talen Energy expands nuclear partnership with Amazon (8-K exhibit, June 11, 2025)",
+      "publisher": "Talen Energy / SEC EDGAR",
+      "year": 2025,
+      "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm"
+    },
+    {
+      "id": "utilitydive_duane",
+      "title": "NextEra, Google deal to restart Duane Arnold nuclear plant",
+      "publisher": "Utility Dive",
+      "year": 2025,
+      "url": "https://www.utilitydive.com/news/nextera-google-nuclear-earnings/804308/"
+    },
+    {
+      "id": "holtec_s1",
+      "title": "Holtec Nuclear Corp Form S-1/A (Palisades restart status, SMR-300 plans)",
+      "publisher": "Holtec / SEC EDGAR",
+      "year": 2026,
+      "url": "https://www.sec.gov/Archives/edgar/data/0002104277/000119312526384287/d40440ds1a.htm"
+    },
+    {
+      "id": "google_kairos",
+      "title": "Google and Kairos Power nuclear energy agreement",
+      "publisher": "Google",
+      "year": 2024,
+      "url": "https://blog.google/outreach-initiatives/sustainability/google-kairos-power-nuclear-energy-agreement/"
+    },
+    {
+      "id": "wnn_clinch",
+      "title": "First construction permit issued for BWRX-300 SMR in US",
+      "publisher": "World Nuclear News",
+      "year": 2026,
+      "url": "https://world-nuclear-news.org/articles/first-construction-permit-issued-for-bwrx300-smr-in-us"
+    },
+    {
+      "id": "wnn_opg",
+      "title": "Canada's first SMR project: How is CAD20.9 billion cost calculated?",
+      "publisher": "World Nuclear News",
+      "year": 2025,
+      "url": "https://world-nuclear-news.org/articles/what-is-the-budget-for-canadas-first-smr-project"
+    },
+    {
+      "id": "ans_meta",
+      "title": "Meta strikes deals with Vistra, Oklo, TerraPower",
+      "publisher": "American Nuclear Society (Nuclear Newswire)",
+      "year": 2026,
+      "url": "https://www.ans.org/news/2026-01-12/article-7666/meta-strikes-deals-with-vistra-oklo-terrapower/"
+    },
+    {
+      "id": "fervo_s1",
+      "title": "Fervo Energy Co Form S-1/A",
+      "publisher": "Fervo Energy / SEC EDGAR",
+      "year": 2026,
+      "url": "https://www.sec.gov/Archives/edgar/data/0001853868/000162828026033127/fervoenergy-sx1a3.htm"
+    },
+    {
+      "id": "thinkgeo_ctt",
+      "title": "Nevada approves first-of-its-kind geothermal power supply agreement (Google/NV Energy/Fervo CTT)",
+      "publisher": "ThinkGeoEnergy",
+      "year": 2025,
+      "url": "https://www.thinkgeoenergy.com/nevada-approves-first-of-its-kind-geothermal-power-supply-agreement/"
+    },
+    {
+      "id": "brookfield_google",
+      "title": "Brookfield and Google sign hydro framework agreement (up to 3,000 MW)",
+      "publisher": "Water Power & Dam Construction",
+      "year": 2025,
+      "url": "https://www.waterpowermagazine.com/?p=28165"
+    },
+    {
+      "id": "powereng_gev",
+      "title": "Data centers drive record surge in GE Vernova power equipment orders as turbine slots tighten through 2030",
+      "publisher": "Power Engineering",
+      "year": 2026,
+      "url": "https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/"
+    },
+    {
+      "id": "powermag_homercity",
+      "title": "Nation's Largest Gas-Fired Plant Planned at Former Pennsylvania Coal Plant Site (Homer City)",
+      "publisher": "POWER Magazine",
+      "year": 2025,
+      "url": "https://www.powermag.com/nations-largest-gas-fired-plant-planned-at-former-pennsylvania-coal-plant-site"
+    },
+    {
+      "id": "iir_entergy_meta",
+      "title": "Louisiana greenlights massive power projects for Meta data center",
+      "publisher": "Industrial Info Resources",
+      "year": 2025,
+      "url": "https://www.industrialinfo.com/news/article/louisiana-greenlights-massive-power-projects-for-meta-data-center--345274"
+    },
+    {
+      "id": "techcrunch_xai",
+      "title": "xAI gets permits for 15 natural gas generators at Memphis data center",
+      "publisher": "TechCrunch",
+      "year": 2025,
+      "url": "https://techcrunch.com/2025/07/03/xai-gets-permits-for-15-natural-gas-generators-at-memphis-data-center"
+    },
+    {
+      "id": "powereng_engines",
+      "title": "Data center power crunch lifts engines, aeroderivatives into larger role",
+      "publisher": "Power Engineering",
+      "year": 2026,
+      "url": "https://www.power-eng.com/gas/data-center-power-crunch-lifts-engines-aeroderivatives-into-larger-role/"
+    },
+    {
+      "id": "wartsila_dc",
+      "title": "Highlights from the Data Centre theme call",
+      "publisher": "Wartsila",
+      "year": 2026,
+      "url": "https://www.wartsila.com/investors/blog/post/highlights-from-the-data-centre-theme-call"
+    },
+    {
+      "id": "powermag_voltagrid",
+      "title": "Oracle taps VoltaGrid for 2.3-GW modular gas fleet to power AI data centers across Texas",
+      "publisher": "POWER Magazine",
+      "year": 2025,
+      "url": "https://www.powermag.com/oracle-taps-voltagrid-for-2-3-gw-modular-gas-fleet-to-power-ai-data-centers-across-texas/"
+    },
+    {
+      "id": "cleanview_frontier",
+      "title": "Behind-the-meter data centers: Stargate Frontier",
+      "publisher": "Cleanview",
+      "year": 2026,
+      "url": "https://cleanview.co/reports/behind-the-meter-data-centers/full-report/stargate-frontier"
+    },
+    {
+      "id": "utilitydive_aep_bloom",
+      "title": "AEP to buy up to 1 GW of Bloom Energy fuel cells for data centers",
+      "publisher": "Utility Dive",
+      "year": 2024,
+      "url": "https://www.utilitydive.com/news/aep-bloom-energy-fuel-cell-data-center/733150/"
+    },
+    {
+      "id": "bloom_ieee2026",
+      "title": "On-Site Power Using Solid Oxide Fuel Cells (vendor presentation, IEEE Nashville)",
+      "publisher": "Bloom Energy (vendor claims)",
+      "year": 2026,
+      "url": "https://ewh.ieee.org/r3/nashville/events/2026/OnSitePowerwithFuelCells.pdf"
+    },
+    {
+      "id": "bloom_report2026",
+      "title": "Data centers plan to reduce reliance on grid, finds Bloom Energy's 2026 Power Report",
+      "publisher": "Bloom Energy (survey)",
+      "year": 2026,
+      "url": "https://www.bloomenergy.com/news/data-centers-plan-to-reduce-reliance-on-grid-finds-bloom-energys-2026-power-report/"
+    },
+    {
+      "id": "aep_10q",
+      "title": "American Electric Power Form 10-Q (Q2 2025) - fuel cell contracts",
+      "publisher": "AEP / SEC EDGAR",
+      "year": 2025,
+      "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490425000141/aep-20250630.htm"
+    },
+    {
+      "id": "jll2026",
+      "title": "Data Center Outlook 2026",
+      "publisher": "JLL",
+      "year": 2026,
+      "url": "https://www.jll.com/en-us/insights/market-outlook/data-center-outlook"
+    },
+    {
+      "id": "constructionowners2026",
+      "title": "How long it actually takes to power a data center in 2026: a U.S. market-by-market reality check",
+      "publisher": "Construction Owners",
+      "year": 2026,
+      "url": "https://www.constructionowners.com/insights/how-long-it-actually-takes-to-power-a-data-center-in-2026-a-u-s-market-by-market-reality-check"
+    },
+    {
+      "id": "utilitydive_ercot_queue",
+      "title": "ERCOT's large load queue jumped almost 300% last year",
+      "publisher": "Utility Dive",
+      "year": 2025,
+      "url": "https://www.utilitydive.com/news/ercots-large-load-queue-jumped-almost-300-last-year-official/808820/"
+    },
+    {
+      "id": "powereng_pjm",
+      "title": "PJM capacity auction hits price cap again as region falls short of reliability target",
+      "publisher": "Power Engineering",
+      "year": 2025,
+      "url": "https://www.power-eng.com/business/pjm-capacity-auction-hits-price-cap-again-as-region-falls-short-of-reliability-target/"
+    },
+    {
+      "id": "jw_sb6",
+      "title": "Senate Bill 6 & Upcoming Changes to Texas Electric Regulations",
+      "publisher": "Jackson Walker LLP",
+      "year": 2025,
+      "url": "https://www.jw.com/news/insights-senate-bill-6-texas-electric-regulations/"
+    }
+  ],
+  "options": [
+    {
+      "id": "grid",
+      "name": "Grid interconnection",
+      "lcoe_usd_mwh": {
+        "low": 67,
+        "high": 109,
+        "src": [
+          "eia_ind_price"
+        ],
+        "note": "Not an LCOE: delivered all-in average INDUSTRIAL retail price, Jan-Jul 2026 YTD, for main data-center states (TX 67.2, GA 79.9, VA 100.8, OH 103.2, PA 109.3 $/MWh). US industrial average 90.3 $/MWh; CA 207 and MA 200 are outliers. Large-load tariffs, demand charges, minimum-take and upgrade cost contributions vary by utility."
+      },
+      "carbon_g_per_kwh": {
+        "value": 350,
+        "src": [
+          "egrid2023"
+        ],
+        "note": "US average total output emission rate, eGRID2023: 770.9 lb CO2e/MWh = ~350 g/kWh (2023 operations, combustion only, not lifecycle). Regional values in regions[]."
+      },
+      "years_to_power": {
+        "low": 4,
+        "high": 7,
+        "src": [
+          "jll2026",
+          "constructionowners2026"
+        ],
+        "note": "JLL: average wait for grid connection in primary US data center markets exceeds 4 years; ~7 years reported for a 100 MW connection in Northern Virginia (JLL, via Construction Owners). Bloom's survey says utilities quote timelines 1.5-2 years longer than developers expect. Secondary markets can be faster but no quantified source found."
+      },
+      "capacity_factor": {
+        "low": null,
+        "high": null,
+        "src": [],
+        "note": "Not applicable; grid supply is available 24/7 subject to curtailment provisions (e.g., Texas SB6)."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 2000,
+        "src": [
+          "iir_entergy_meta",
+          "bloom_report2026"
+        ],
+        "note": "Meta Hyperion (2 GW, Louisiana) is served by utility-built generation; Bloom survey expects nearly one-third of new campuses to exceed 1 GW by 2035. Large blocks often require new utility generation and transmission."
+      },
+      "notes": "Cheapest and simplest where capacity exists, but large-load queues are now the binding constraint: ERCOT's large-load queue exceeded 233 GW by late 2025 (>70% data centers) and PJM's 2027/28 capacity auction cleared at the $333.44/MW-day cap with a 6,623 MW shortfall. Texas SB6 (2025) imposes cost-sharing, disclosure and emergency curtailment/remote-disconnect rules on loads >=75 MW. Many large campuses pair grid service with utility-built gas plants or on-site bridging power.",
+      "examples": [
+        {
+          "text": "Meta Hyperion (Louisiana, 2 GW campus): LPSC approved Entergy Louisiana building ~2.25 GW of new CCGTs (mid/end-2029) plus >=1,500 MW solar procurement, Aug 20, 2025",
+          "src": [
+            "iir_entergy_meta"
+          ]
+        },
+        {
+          "text": "ERCOT large-load interconnection requests >233 GW by late 2025, up ~300% from end-2024",
+          "src": [
+            "utilitydive_ercot_queue"
+          ]
+        },
+        {
+          "text": "PJM 2027/28 BRA cleared at the $333.44/MW-day cap; ~5,100 of 5,250 MW peak-load growth attributed to data centers",
+          "src": [
+            "powereng_pjm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gas_ccgt",
+      "name": "On-site / behind-the-meter gas combined cycle",
+      "lcoe_usd_mwh": {
+        "low": 51,
+        "high": 129,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Lazard v19 unsubsidized new-build CCGT, $1,450-2,100/kW capex, 30-90% CF, $3.45/MMBtu gas. Lazard illustrative high case using recent quotes ($2,400-2,600/kW, post-2028 COD) has a midpoint of ~$107/MWh. Excludes pipeline lateral, redundancy needed for islanded 24/7 supply, and backup."
+      },
+      "carbon_g_per_kwh": {
+        "value": 486,
+        "src": [
+          "nrel_lca2021"
+        ],
+        "note": "NREL median lifecycle for natural gas generation. Combustion-only at Lazard CCGT heat rate (6,475-6,550 Btu/kWh x 52.91 kg/MMBtu) is ~343-347 g/kWh (derived from eia_co2coef + lazard2026); the remainder is upstream methane/supply chain."
+      },
+      "years_to_power": {
+        "low": 4,
+        "high": 7,
+        "src": [
+          "powereng_gev",
+          "lazard2026",
+          "iir_entergy_meta"
+        ],
+        "note": "Heavy-duty turbine lead times ~3 years for new orders (GE Vernova, Apr 2026) with 2029-2030 slots largely committed; Lazard construction time 24 months. Entergy's Meta CCGTs approved Aug 2025 target mid/late 2029. Estimate, not a single published figure."
+      },
+      "capacity_factor": {
+        "low": 0.58,
+        "high": 0.9,
+        "src": [
+          "eia_cf_fossil",
+          "lazard2026"
+        ],
+        "note": "US CCGT fleet 58.4% (2025) / 60.5% (2024); Lazard range 30-90%; dedicated data-center plants would target the high end."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 4500,
+        "src": [
+          "powermag_homercity"
+        ],
+        "note": "Homer City (PA) plans ~4.5 GW from seven GE Vernova 7HA.02 turbines; Lazard reference plant 725-1,425 MW."
+      },
+      "notes": "Lowest-cost dispatchable firm power where gas is cheap, but turbine supply is the bottleneck: GE Vernova had ~100 GW of gas backlog plus slot reservations in Q1 2026, with pricing rising. Behind-the-meter CCGT needs N+1 redundancy and backup for 99.9%+ uptime, a firm pipeline contract, and air permits. Fuel price risk: Henry Hub averaged $2.19 in 2024 and $3.53 in 2025.",
+      "examples": [
+        {
+          "text": "Homer City Energy Campus (PA): up to 4.5 GW, seven GE Vernova 7HA.02 turbines, >$10B initial capital, equipment deliveries from 2026",
+          "src": [
+            "powermag_homercity"
+          ]
+        },
+        {
+          "text": "Entergy Louisiana CCGTs for Meta Hyperion: Franklin Farms 1,500 MW (mid-2029) and Selpa 754 MW (end-2029)",
+          "src": [
+            "iir_entergy_meta"
+          ]
+        },
+        {
+          "text": "GE Vernova: ~100 GW gas backlog + slot reservations (Q1 2026), ~20% tied to data center load",
+          "src": [
+            "powereng_gev"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gas_recip_or_aero",
+      "name": "Reciprocating engines / aeroderivative turbines (fast power)",
+      "lcoe_usd_mwh": {
+        "low": 51,
+        "high": 77,
+        "src": [
+          "eia_aeo2023_cost",
+          "lazard2026"
+        ],
+        "note": "DERIVED ESTIMATE, not a published LCOE: EIA AEO2023 overnight costs (2022$: recip $2,240/kW, 8,295 Btu/kWh; aeroderivative $1,428/kW, 9,124 Btu/kWh) at an 85% CF, 7.7% WACC, 20-yr CRF, and Lazard's gas sensitivity range of $2.59-4.31/MMBtu. Recips came out at $63-77/MWh, aeros at $51-66/MWh. Excludes taxes, redundancy overbuild (islanded sites often install ~1.5-2x), and 2024-26 equipment inflation, so real costs are likely higher. Lazard gas peaking ($144-276) assumes a 10-15% CF and is not comparable."
+      },
+      "carbon_g_per_kwh": {
+        "value": 540,
+        "src": [
+          "eia_co2coef",
+          "eia_aeo2023_cost",
+          "nrel_lca2021"
+        ],
+        "note": "DERIVED: combustion CO2 ~439 g/kWh (recip) to ~483 g/kWh (aero) from EIA heat rates x 52.91 kg/MMBtu, plus ~97 g/kWh upstream (NREL gas lifecycle 486 minus 389 combustion), giving ~536-580 g/kWh. Bloom's vendor deck cites ~450 kg/MWh (recip) and ~515 kg/MWh (open-cycle GT), combustion only."
+      },
+      "years_to_power": {
+        "low": 1,
+        "high": 3,
+        "src": [
+          "cleanview_frontier",
+          "powereng_engines",
+          "techcrunch_xai"
+        ],
+        "note": "Crusoe brought its first 200 MW at Stargate Abilene online within 15 months of construction start. A Wartsila 412 MW engine plant (Ohio) targets early 2028. xAI ran mobile turbines at Memphis within months, partly without permits. Engine and aero supply is also tightening."
+      },
+      "capacity_factor": {
+        "low": 0.17,
+        "high": 0.85,
+        "src": [
+          "eia_cf_fossil"
+        ],
+        "note": "US fleet ICE gas units 17.4-18.0% and gas turbines 13.9-14.1% (2024-25), reflecting peaking duty; the 85% figure is an assumed baseload duty for data-center prime power (used in the derived LCOE)."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 2580,
+        "src": [
+          "cleanview_frontier",
+          "wartsila_dc"
+        ],
+        "note": "Stargate Frontier (TX): ~2.58 GW gross from ~620 Jenbacher engines for ~1.4 GW of IT, fully off-grid. Wartsila sees the sweet spot at 50-400 MW."
+      },
+      "notes": "Fastest route to large firm power and modular (3-50 MW units), so widely used as bridge or permanent off-grid prime power. Risks: higher heat rate and fuel cost than CCGT, local air permits and community opposition (xAI Memphis), large redundancy overbuild, and rising engine backlogs. Texas SB6 lets ERCOT call on large-load backup generation in emergencies.",
+      "examples": [
+        {
+          "text": "Oracle-VoltaGrid: 2.3 GW of modular INNIO Jenbacher engine fleets across Texas sites (Oct 2025)",
+          "src": [
+            "powermag_voltagrid"
+          ]
+        },
+        {
+          "text": "Stargate Frontier (Shackelford Co., TX): ~2.58 GW gross off-grid recip microgrid for 1.4 GW IT; bulk capacity likely 2027",
+          "src": [
+            "cleanview_frontier"
+          ]
+        },
+        {
+          "text": "xAI Colossus (Memphis): permit for 15 turbines / 247 MW (Jul 2025), after running up to 35 units (~421 MW) without permits",
+          "src": [
+            "techcrunch_xai"
+          ]
+        },
+        {
+          "text": "Crusoe: 13 x 50 MW ProEnergy PE6000 aeroderivatives (650 MW); Caterpillar G3500 engines for 2 GW Monarch campus (WV)",
+          "src": [
+            "powereng_engines"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fuel_cells",
+      "name": "Fuel cells (e.g., Bloom solid oxide on natural gas)",
+      "lcoe_usd_mwh": {
+        "low": 114,
+        "high": 125,
+        "src": [
+          "eia_aeo2023_cost",
+          "lazard2026"
+        ],
+        "note": "DERIVED ESTIMATE: EIA AEO2023 fuel cell total overnight cost $7,291/kW (2022$), 6,469 Btu/kWh, 90% CF, 7.7% WACC, 20-yr CRF, $2.59-4.31/MMBtu gas. No current independent public LCOE was found; AEP Ohio's contract prices with AWS and Cologix are redacted. Bloom claims '35% lower capex' (vendor), so actual 2026 pricing may be lower. Stack replacements are not modeled."
+      },
+      "carbon_g_per_kwh": {
+        "value": 440,
+        "src": [
+          "bloom_ieee2026",
+          "eia_co2coef",
+          "eia_aeo2023_cost",
+          "nrel_lca2021"
+        ],
+        "note": "DERIVED: combustion-equivalent CO2 ~342 g/kWh (6,469 Btu/kWh x 52.91 kg/MMBtu; Bloom's vendor claim is ~340 kg/MWh), plus ~97 g/kWh upstream gas (NREL), giving ~440 g/kWh lifecycle. Near-zero NOx/SOx, so air permitting is easier."
+      },
+      "years_to_power": {
+        "low": 0.5,
+        "high": 1,
+        "src": [
+          "utilitydive_aep_bloom",
+          "bloom_ieee2026"
+        ],
+        "note": "Bloom says 6-9 months (Utility Dive) and '<6 months' for packaged systems (vendor deck). Vendor claims, not independently verified."
+      },
+      "capacity_factor": {
+        "low": 0.85,
+        "high": 0.95,
+        "src": [],
+        "note": "ASSUMPTION for baseload duty; no independent fleet capacity factor found. Bloom reports 60% beginning-of-life and 54% lifetime-average electrical efficiency (vendor)."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 100,
+        "src": [
+          "aep_10q",
+          "utilitydive_aep_bloom"
+        ],
+        "note": "AEP Ohio's two signed contracts total ~98 MW (AWS and Cologix sites); AEP's framework is up to 1 GW in total; Bloom power blocks are ~25 MW."
+      },
+      "notes": "The fastest on-site option, modular, quiet, low water use, and easy to permit, but expensive per MWh, fully exposed to gas prices, and supplied by essentially one vendor at GW scale (~2 GW/yr Bloom capacity in 2026, vendor figure). Often used as bridge power until grid service arrives, with costs paid by the large customer under special contracts.",
+      "examples": [
+        {
+          "text": "AEP-Bloom: up to 1 GW of SOFCs, 100 MW initial order (Nov 2024); PUCO approved ~98 MW of contracts with AWS (6-yr) and Cologix (15-yr) in May 2025",
+          "src": [
+            "utilitydive_aep_bloom",
+            "aep_10q"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solar_storage",
+      "name": "Solar + 4-hour battery (and overbuilt toward 24/7)",
+      "lcoe_usd_mwh": {
+        "low": 61,
+        "high": 156,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Lazard v19 unsubsidized utility PV+storage (storage = 50% of PV MW, 4 h); NOT firm. Firming estimates: (a) Lazard 'LCOE + levelized firming cost' for PV+storage = $115-167/MWh unsubsidized across MISO/CAISO/SPP/PJM/ERCOT/NYISO, based on ISO capacity accreditation, not single-site 24/7; (b) Ember: 6 GW PV + 17 GWh battery per 1 GW of constant output meets 97% of hours in Las Vegas at ~$104/MWh using global-average costs (US costs higher; 60% coverage ~$75/MWh). Standalone PV $40-98."
+      },
+      "firm_24x7_estimate_usd_mwh": {
+        "low": 104,
+        "high": 167,
+        "src": [
+          "ember2025",
+          "lazard2026"
+        ],
+        "note": "A range across the two methods above, not a single study. Achieving ~97% of hours needs ~6x PV overbuild; 100% still needs backup."
+      },
+      "carbon_g_per_kwh": {
+        "value": 43,
+        "src": [
+          "nrel_lca2021"
+        ],
+        "note": "NREL median for PV; Li-ion storage adds ~33 g per kWh delivered through storage."
+      },
+      "years_to_power": {
+        "low": 2,
+        "high": 5,
+        "src": [
+          "lazard2026",
+          "lbnl_queued2025"
+        ],
+        "note": "Construction ~12 months (Lazard), but grid-connected projects face a median IR-to-COD of ~4-5 years (55 months for 2024 completions; 56 months for 200+ MW). Fully islanded behind-the-meter builds avoid the queue but need very large land areas. Estimate."
+      },
+      "capacity_factor": {
+        "low": 0.2,
+        "high": 0.3,
+        "src": [
+          "lazard2026",
+          "eia_cf_nonfossil",
+          "lbnl_solar2025"
+        ],
+        "note": "PV only: Lazard 20-30%; US fleet 23.2% (2024), 24.4% (2025); LBNL regional averages from 17% (least sunny) to 31% (sunniest)."
+      },
+      "firm": false,
+      "typical_max_mw_per_site": {
+        "value": 1000,
+        "src": [
+          "ember2025"
+        ],
+        "note": "Firm-equivalent: Ember's 1 GW constant-output case needs 6 GW PV + 17 GWh storage. Lazard's reference project is 100 MW PV + 50 MW/200 MWh storage."
+      },
+      "notes": "Cheapest energy and fastest to build, but not firm alone; 24/7 needs heavy overbuild, multi-day backup, or grid/gas firming. Storage costs rose in 2026 (Lazard LCOS 4-h $210-292/MWh) because of tariffs and FEOC rules; OBBBA preserved the storage ITC through 2033. Best in the Desert Southwest and CAISO.",
+      "examples": [
+        {
+          "text": "Meta Hyperion: Entergy to procure >=1,500 MW of solar alongside new gas (LPSC approval Aug 2025)",
+          "src": [
+            "iir_entergy_meta"
+          ]
+        },
+        {
+          "text": "Ember model: Las Vegas 6 GW PV + 17 GWh battery delivers 1 GW for 97% of hours at ~$104/MWh",
+          "src": [
+            "ember2025"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wind_storage",
+      "name": "Wind + battery storage",
+      "lcoe_usd_mwh": {
+        "low": 49,
+        "high": 140,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Lazard v19 unsubsidized onshore wind + storage (storage = 50% of wind MW, 4 h); NOT firm. Standalone onshore wind $37-99. Lazard LCOE + levelized firming cost: $87-118/MWh for wind and $103-146/MWh for wind+storage across six ISOs."
+      },
+      "firm_24x7_estimate_usd_mwh": {
+        "low": 103,
+        "high": 146,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Lazard wind+storage plus ISO-based firming cost (capacity-accreditation method, not a single-site 24/7 build)."
+      },
+      "carbon_g_per_kwh": {
+        "value": 13,
+        "src": [
+          "nrel_lca2021"
+        ]
+      },
+      "years_to_power": {
+        "low": 2,
+        "high": 6,
+        "src": [
+          "lazard2026",
+          "lbnl_queued2025"
+        ],
+        "note": "Construction 12-18 months (Lazard), but wind and solar+battery have the longest queue durations (LBNL); median IR-to-COD for 2024 completions was 55 months. Estimate."
+      },
+      "capacity_factor": {
+        "low": 0.3,
+        "high": 0.55,
+        "src": [
+          "lazard2026",
+          "eia_cf_nonfossil",
+          "lbnl_wind2026"
+        ],
+        "note": "Lazard 30-55%; US fleet 34.3% (2024) and 34.2% (2025); projects built in 2024 averaged 37.1% in 2025 (LBNL)."
+      },
+      "firm": false,
+      "typical_max_mw_per_site": {
+        "value": 300,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Lazard reference onshore wind project 200-300 MW; wind is usually remote from load and delivered via the grid/virtual PPA."
+      },
+      "notes": "Low-cost energy in SPP, MISO, ERCOT, and NYISO upstate, with a lower land footprint than solar per MWh, but output is seasonal and multi-day lulls make 4-h batteries insufficient for 24/7. Usually procured as a grid-delivered PPA rather than co-located. SPP had the highest curtailment (9% in 2025) and lowest wind market value ($15/MWh).",
+      "examples": []
+    },
+    {
+      "id": "solar_wind_gas_hybrid",
+      "name": "Renewables with gas firming (hybrid)",
+      "lcoe_usd_mwh": {
+        "low": 87,
+        "high": 167,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "PROXY: Lazard 'LCOE + levelized firming cost' for wind, wind+storage, solar and solar+storage across MISO/CAISO/SPP/PJM/ERCOT/NYISO, with firming priced at each ISO's Net CONE (cost of new firm capacity, typically gas). Compare new CCGT alone at $51-129. Actual on-site hybrid cost depends on the RE/gas energy split."
+      },
+      "carbon_g_per_kwh": {
+        "value": 165,
+        "src": [
+          "nrel_lca2021"
+        ],
+        "note": "ILLUSTRATIVE, DERIVED: 70% of energy from wind/solar (~13-43 g) and 30% from gas (486 g) gives ~160-170 g/kWh. Scales roughly linearly with gas share."
+      },
+      "years_to_power": {
+        "low": 2,
+        "high": 5,
+        "src": [
+          "cleanview_frontier",
+          "lazard2026",
+          "lbnl_queued2025"
+        ],
+        "note": "Gas engines can energize in ~1-2 years while renewables are added; the overall timeline depends on queue position. Estimate."
+      },
+      "capacity_factor": {
+        "low": null,
+        "high": null,
+        "src": [],
+        "note": "System is dispatched to meet load (firm); the RE share sets gas burn."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 2000,
+        "src": [
+          "iir_entergy_meta"
+        ],
+        "note": "Meta Hyperion-style utility portfolio: ~2.25 GW new gas plus >=1.5 GW solar for a 2 GW campus."
+      },
+      "notes": "The most common real-world pattern for GW campuses: utility or on-site gas for firmness plus contracted solar/wind (and batteries) to cut emissions and fuel burn. Captures cheap renewable energy while gas covers lulls; risks combine gas turbine lead times and renewable interconnection queues.",
+      "examples": [
+        {
+          "text": "Entergy/Meta Hyperion: 2,262 MW of new CCGTs plus >=1,500 MW solar procurement",
+          "src": [
+            "iir_entergy_meta"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nuclear_existing",
+      "name": "Existing nuclear (PPA, co-location, uprate, restart)",
+      "lcoe_usd_mwh": {
+        "low": 71,
+        "high": 115,
+        "src": [
+          "lazard2026",
+          "jefferies_crane"
+        ],
+        "note": "No disclosed PPA prices. Low: Lazard illustrative restart LCOE ~$71/MWh (Crane/Duane Arnold/Palisades, 20 yrs, read from chart marker). High: Jefferies' 2024 estimate of $110-115/MWh for the Microsoft-Crane PPA, vs. low-$100s market expectations for collocated deals. The marginal cost of running existing fully depreciated nuclear is only $26-36/MWh (Lazard), which shows the size of the scarcity premium buyers pay."
+      },
+      "carbon_g_per_kwh": {
+        "value": 13,
+        "src": [
+          "nrel_lca2021"
+        ]
+      },
+      "years_to_power": {
+        "low": 1,
+        "high": 4,
+        "src": [
+          "talen_amazon",
+          "constellation_meta",
+          "wnn_crane_loan",
+          "utilitydive_duane"
+        ],
+        "note": "Contracts for operating plants deliver within ~1-2 years (Meta-Clinton signed Jun 2025, starts Jun 2027; Talen-Amazon ramps to full volume by 2032). Restarts take ~3-4 years (Crane announced Sep 2024 for 2027; Duane Arnold announced 2025 for early 2029)."
+      },
+      "capacity_factor": {
+        "low": 0.89,
+        "high": 0.94,
+        "src": [
+          "eia_cf_nonfossil",
+          "lazard2026"
+        ],
+        "note": "US fleet 90.8% (2024), 91.0% (2025); Lazard 89-94%."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 1920,
+        "src": [
+          "talen_amazon"
+        ],
+        "note": "Talen-Amazon Susquehanna PPA up to 1,920 MW."
+      },
+      "notes": "Firm, carbon-free and immediately available, but the supply is finite: only a few restart candidates exist, and co-location is contested (Talen-Amazon moved from co-located to front-of-meter after regulatory pushback). Deals are mostly grid-delivered PPAs or virtual PPAs at premium prices. Uprates (e.g., Vistra 433 MW for Meta) add modest new capacity.",
+      "examples": [
+        {
+          "text": "Microsoft-Constellation Crane (TMI-1) restart: ~835 MW, 20-yr PPA; restart now expected 2027 (originally 2028); ~$1.6B cost with a $1B DOE loan",
+          "src": [
+            "constellation_crane",
+            "wnn_crane_loan"
+          ]
+        },
+        {
+          "text": "Amazon-Talen Susquehanna: up to 1,920 MW front-of-meter through 2042, full volume by 2032",
+          "src": [
+            "talen_amazon"
+          ]
+        },
+        {
+          "text": "Meta-Constellation Clinton (IL): 1,121 MW + 30 MW uprate, 20-yr PPA from June 2027",
+          "src": [
+            "constellation_meta"
+          ]
+        },
+        {
+          "text": "Google-NextEra Duane Arnold (IA) restart: 615 MW, 25-yr PPA, early 2029 (possibly Q4 2028)",
+          "src": [
+            "utilitydive_duane"
+          ]
+        },
+        {
+          "text": "Holtec Palisades (MI) restart: commissioning expected 2026, ahead of a March 2027 commitment to co-op offtakers",
+          "src": [
+            "holtec_s1"
+          ]
+        },
+        {
+          "text": "Meta-Vistra: 2.6 GW from Perry, Davis-Besse and Beaver Valley including 433 MW of uprates (Jan 2026)",
+          "src": [
+            "ans_meta"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smr",
+      "name": "New small modular / advanced nuclear",
+      "lcoe_usd_mwh": {
+        "low": 114,
+        "high": 214,
+        "src": [
+          "lazard2026",
+          "eia_aeo2023_cost",
+          "wnn_opg"
+        ],
+        "note": "Highly uncertain FOAK. High: Lazard illustrative SMR LCOE ~$214/MWh (Clinch River, Darlington, Natrium capex; read from chart marker; Lazard calls it 'highly illustrative'). Low: DERIVED ~$114/MWh from EIA AEO2023 SMR overnight cost $8,349/kW (2022$, 93% CF, 7.7% WACC, 30 yrs). Reference: OPG Darlington's 4 x 300 MW BWRX-300 at CAD20.9B (USD15.1B) is ~USD12,600/kW including financing and escalation; on the same basis that gives ~$159/MWh (derived)."
+      },
+      "carbon_g_per_kwh": {
+        "value": 13,
+        "src": [
+          "nrel_lca2021"
+        ],
+        "note": "NREL median for light-water nuclear; advanced designs are assumed similar."
+      },
+      "years_to_power": {
+        "low": 5,
+        "high": 10,
+        "src": [
+          "google_kairos",
+          "wnn_clinch",
+          "wnn_opg",
+          "ans_meta"
+        ],
+        "note": "Earliest US commercial units ~2030 (Kairos Hermes 2 50 MW for TVA/Google; Oklo for Meta 'as early as 2030'); OPG's first BWRX-300 is due end-2030 after construction started 2025; TVA Clinch River got the first US BWRX-300 construction permit in Sep 2026 but no construction date; Natrium units for Meta by 2035."
+      },
+      "capacity_factor": {
+        "low": 0.89,
+        "high": 0.94,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Assumed similar to the existing LWR fleet (Lazard nuclear assumption); no SMR operating data in the US."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 1200,
+        "src": [
+          "wnn_opg",
+          "ans_meta"
+        ],
+        "note": "OPG Darlington 4 x 300 MW; Oklo Pike County, OH up to 1.2 GW; TerraPower's 8 x 345 MW (2.8 GW) for Meta, sites not yet disclosed."
+      },
+      "notes": "Potentially ideal firm, clean, compact power for data centers, but not available at scale before ~2030-2035, with FOAK cost and schedule risk, HALEU fuel supply for some designs, and NRC licensing. Hyperscalers are signing early framework deals to anchor orderbooks.",
+      "examples": [
+        {
+          "text": "Google-Kairos: up to 500 MW by 2035, first unit 2030 (Hermes 2, 50 MW, PPA with TVA)",
+          "src": [
+            "google_kairos"
+          ]
+        },
+        {
+          "text": "Meta: up to 6.6 GW of nuclear by 2035 including TerraPower (up to 8 Natrium units, 2.8 GW + 1.2 GW storage) and Oklo (up to 1.2 GW, Pike County OH)",
+          "src": [
+            "ans_meta"
+          ]
+        },
+        {
+          "text": "TVA Clinch River BWRX-300 (300 MWe): first US BWRX-300 construction permit, Sep 2026",
+          "src": [
+            "wnn_clinch"
+          ]
+        },
+        {
+          "text": "Amazon-Talen to explore new SMRs in Pennsylvania",
+          "src": [
+            "talen_amazon"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geothermal",
+      "name": "Next-generation / enhanced geothermal (EGS)",
+      "lcoe_usd_mwh": {
+        "low": 67,
+        "high": 111,
+        "src": [
+          "lazard2026"
+        ],
+        "note": "Lazard v19 geothermal range (inflation-adjusted v14 data, mostly conventional). Lazard illustrative new geothermal at $7,000/kW (Fervo Cape Phase I level) gives ~$107/MWh unsubsidized and ~$78 with ITC. Fervo targets ~$3,000/kW long-term (company goal)."
+      },
+      "carbon_g_per_kwh": {
+        "value": 37,
+        "src": [
+          "nrel_lca2021"
+        ],
+        "note": "NREL median for geothermal (largely flash/binary)."
+      },
+      "years_to_power": {
+        "low": 3,
+        "high": 6,
+        "src": [
+          "lazard2026",
+          "fervo_s1"
+        ],
+        "note": "Lazard construction time 36 months; Fervo Cape Station (500 MW under construction) expects first power late 2026 and ~100 MW by early 2027. Estimate."
+      },
+      "capacity_factor": {
+        "low": 0.65,
+        "high": 0.9,
+        "src": [
+          "eia_cf_nonfossil",
+          "lazard2026"
+        ],
+        "note": "US geothermal fleet 64.6% (2024), 65.9% (2025); Lazard new-build 80-90%."
+      },
+      "firm": true,
+      "typical_max_mw_per_site": {
+        "value": 500,
+        "src": [
+          "fervo_s1"
+        ],
+        "note": "Cape Station first two phases 500 MW; site potential ~4.3 GW (company)."
+      },
+      "notes": "Firm, clean, small land footprint and potentially flexible, but resource-limited to the West (NV, UT, CA) for now; EGS is early commercial with drilling and subsurface risk. Fervo reports drilling times down ~75% and per-foot costs down ~70% from 2022 to 2025 (company figures). Only ~2 GW of geothermal sits in interconnection queues.",
+      "examples": [
+        {
+          "text": "Google-NV Energy-Fervo: 115 MW Corsac Station via Nevada Clean Transition Tariff (approved May 19, 2025)",
+          "src": [
+            "thinkgeo_ctt"
+          ]
+        },
+        {
+          "text": "Fervo-Google 3 GW non-binding framework agreement; Fervo has 658 MW of binding PPAs",
+          "src": [
+            "fervo_s1"
+          ]
+        },
+        {
+          "text": "Fervo Cape Station (Utah): 500 MW under construction, first power late 2026, Phase I ~$7,000/kW",
+          "src": [
+            "fervo_s1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydro",
+      "name": "Existing hydropower PPA",
+      "lcoe_usd_mwh": {
+        "low": null,
+        "high": null,
+        "derived_estimate": 73,
+        "src": [
+          "brookfield_google",
+          "eia_cf_nonfossil"
+        ],
+        "note": "No published price. DERIVED, rough: Brookfield-Google's >$3B for 670 MW over 20 years implies ~$73/MWh IF the plants run at the US hydro fleet average CF of ~35%; actual plant output is not disclosed, so treat this as order-of-magnitude only. Lazard and EIA do not give a current existing-hydro PPA benchmark."
+      },
+      "carbon_g_per_kwh": {
+        "value": 21,
+        "src": [
+          "nrel_lca2021"
+        ]
+      },
+      "years_to_power": {
+        "low": null,
+        "high": null,
+        "src": [
+          "brookfield_google"
+        ],
+        "note": "The plants already operate; PPAs are typically grid-delivered/virtual, so physical time-to-power equals the data center's grid connection time (see grid)."
+      },
+      "capacity_factor": {
+        "low": 0.35,
+        "high": 0.35,
+        "src": [
+          "eia_cf_nonfossil"
+        ],
+        "note": "US conventional hydro fleet 34.6% (2024), 35.3% (2025); strongly seasonal, varies with water year."
+      },
+      "firm": false,
+      "typical_max_mw_per_site": {
+        "value": 670,
+        "src": [
+          "brookfield_google"
+        ],
+        "note": "Holtwood + Safe Harbor (two PA plants) total 670 MW."
+      },
+      "notes": "Clean and partly dispatchable, but existing capacity is fully built, relicensing-dependent, and drought-exposed; it supplies clean energy attributes rather than incremental firm on-site power. Best regions are the Pacific Northwest and upstate New York.",
+      "examples": [
+        {
+          "text": "Brookfield-Google Hydro Framework: up to 3,000 MW; first 20-yr PPAs for Holtwood and Safe Harbor (670 MW, >$3B), PJM/MISO focus, Jul 2025",
+          "src": [
+            "brookfield_google"
+          ]
+        }
+      ]
+    }
+  ],
+  "regions": [
+    {
+      "id": "ercot",
+      "name": "Texas (ERCOT)",
+      "grid_queue_years": {
+        "value": 3.5,
+        "low": 2.5,
+        "high": 4.7,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. ERCOT median ~42 months (IQR ~30-57). Large-load queue >233 GW (late 2025)."
+      },
+      "solar_cf": 0.22,
+      "wind_cf": 0.34,
+      "gas_price_usd_mmbtu": 2.09,
+      "grid_carbon_g_per_kwh": 334,
+      "geothermal_resource": "poor",
+      "hydro_resource": "poor",
+      "industrial_power_price_usd_mwh": 67,
+      "notes": "Fastest generator interconnection among ISOs, cheapest gas, energy-only market. Large-load queue >233 GW (>70% data centers). SB6 (2025): >=75 MW loads share interconnection costs, must disclose backup generation, and can be curtailed or ordered onto backup in emergencies; new co-location with existing plants needs PUC approval. Grid CO2e from eGRID ERCT 736.6 lb/MWh. Gas price is 2024 electric-power average ($2.17/Mcf); 2025 Henry Hub was ~$1.34 higher than in 2024.",
+      "src": [
+        "lbnl_queued2025",
+        "lazard2026",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "utilitydive_ercot_queue",
+        "jw_sb6",
+        "eia_steo"
+      ]
+    },
+    {
+      "id": "pjm",
+      "name": "Mid-Atlantic / Ohio Valley (PJM)",
+      "grid_queue_years": {
+        "value": 4.3,
+        "low": 2.3,
+        "high": 5.6,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. PJM median ~51 months (IQR ~27-67); 2024 completions ~70 months. Northern Virginia load connection ~7 years for 100 MW (JLL via Construction Owners)."
+      },
+      "solar_cf": 0.18,
+      "wind_cf": 0.3,
+      "gas_price_usd_mmbtu": 2.04,
+      "grid_carbon_g_per_kwh": 365,
+      "geothermal_resource": "poor",
+      "hydro_resource": "poor",
+      "industrial_power_price_usd_mwh": 101,
+      "notes": "The largest data center market (Northern Virginia, Ohio) and the most constrained: the 2027/28 capacity auction cleared at the $333.44/MW-day cap with a 6.6 GW shortfall. Industrial prices (2026 YTD) run VA 100.8, PA 109.3, OH 103.2, IL 102.4 $/MWh, up ~3-27% YoY. Marcellus gas is cheap at the plant (PA $2.11/Mcf, OH $2.36 in 2024). Existing nuclear hub: Susquehanna, Crane, Clinton is MISO. Carbon = generation-weighted eGRID RFCE (272 g) and RFCW (416 g).",
+      "src": [
+        "lbnl_queued2025",
+        "lazard2026",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "powereng_pjm",
+        "constructionowners2026"
+      ]
+    },
+    {
+      "id": "miso",
+      "name": "Midcontinent (MISO)",
+      "grid_queue_years": {
+        "value": null,
+        "low": null,
+        "high": null,
+        "note": "MISO is not in LBNL's 2018-2024 duration box plot; its 2014-2018 median IR->COD was ~96 months (slide 48, approximate). No recent median found."
+      },
+      "solar_cf": 0.18,
+      "wind_cf": 0.36,
+      "gas_price_usd_mmbtu": 2.52,
+      "grid_carbon_g_per_kwh": 406,
+      "geothermal_resource": "poor",
+      "hydro_resource": "poor",
+      "industrial_power_price_usd_mwh": 91,
+      "notes": "Strong wind resource (Lazard regional CF 36%) and a coal-heavy mix. Industrial prices 2026 YTD: IN 91.5, MN 97.5, IA 73.8, LA 66.5 $/MWh (value shown = Indiana). Gas price shown = Indiana 2024 ($2.61/Mcf); LA $2.67. Carbon = generation-weighted eGRID MROW/MROE/RFCM/SRMV. Clinton (IL) nuclear and Duane Arnold (IA) restart are MISO deals; Entergy Louisiana (Meta Hyperion) is also in MISO.",
+      "src": [
+        "lbnl_queued2025",
+        "lazard2026",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price"
+      ]
+    },
+    {
+      "id": "spp",
+      "name": "Southwest Power Pool (SPP)",
+      "grid_queue_years": {
+        "value": 4.7,
+        "low": 4.0,
+        "high": 5.2,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. SPP median ~56 months (IQR ~49-63)."
+      },
+      "solar_cf": 0.19,
+      "wind_cf": 0.37,
+      "gas_price_usd_mmbtu": 2.63,
+      "grid_carbon_g_per_kwh": 396,
+      "geothermal_resource": "poor",
+      "hydro_resource": "poor",
+      "industrial_power_price_usd_mwh": 67,
+      "notes": "The best US wind region (Lazard CF 37%; ~40% of SPP North and ~33% of SPP South generation from wind per eGRID), but with the highest wind curtailment (9% in 2025) and lowest wind market value ($15/MWh, LBNL). Industrial prices: OK 66.9, KS 83.0 $/MWh (2026 YTD; value = OK). Gas = Kansas 2024 ($2.72/Mcf; OK withheld).",
+      "src": [
+        "lbnl_queued2025",
+        "lazard2026",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "lbnl_wind2026"
+      ]
+    },
+    {
+      "id": "caiso",
+      "name": "California (CAISO)",
+      "grid_queue_years": {
+        "value": 6.3,
+        "low": 4.1,
+        "high": 7.3,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. CAISO median ~76 months (IQR ~49-88), the longest of any region."
+      },
+      "solar_cf": 0.27,
+      "wind_cf": 0.34,
+      "gas_price_usd_mmbtu": 3.84,
+      "grid_carbon_g_per_kwh": 195,
+      "geothermal_resource": "good",
+      "hydro_resource": "fair",
+      "industrial_power_price_usd_mwh": 207,
+      "notes": "Excellent solar (Lazard regional CF 27%), the cleanest large grid (eGRID CAMX 430 lb/MWh; ~3.6% geothermal, ~14% hydro), but the highest industrial prices (20.7 c/kWh) and the longest interconnection times. Bloom's survey expects CA to lose >50% of relative data center market share by 2028.",
+      "src": [
+        "lbnl_queued2025",
+        "lazard2026",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "bloom_report2026"
+      ]
+    },
+    {
+      "id": "southeast",
+      "name": "Southeast (Southern Co / TVA / Duke)",
+      "grid_queue_years": {
+        "value": 3.5,
+        "low": 2.5,
+        "high": 4.6,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. Southeast (non-ISO) median ~42 months (IQR ~30-55); 2024 completions ~59 months."
+      },
+      "solar_cf": null,
+      "wind_cf": null,
+      "gas_price_usd_mmbtu": 2.55,
+      "grid_carbon_g_per_kwh": 345,
+      "geothermal_resource": "poor",
+      "hydro_resource": "fair",
+      "industrial_power_price_usd_mwh": 79,
+      "notes": "Vertically integrated utilities build generation for large loads (often gas) through IRPs; Georgia's data center share is expected to grow 75% by 2028 (Bloom survey). Industrial prices 2026 YTD: GA 79.9, TN 68.2, AL 79.3, NC 79.1 $/MWh. Gas = Tennessee 2024 ($2.64/Mcf); AL $2.86. TVA has hydro (~7.6% of SRTV generation) and nuclear and is the Kairos/Google SMR offtaker (Hermes 2) and Clinch River SMR site. No ISO-specific solar/wind CF available (LBNL: solar 17-31% nationally; the Southeast has little wind). Carbon = generation-weighted eGRID SRSO/SRTV/SRVC.",
+      "src": [
+        "lbnl_queued2025",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "bloom_report2026",
+        "google_kairos",
+        "wnn_clinch"
+      ]
+    },
+    {
+      "id": "desert_sw",
+      "name": "Desert Southwest (AZ / NV / NM)",
+      "grid_queue_years": {
+        "value": 2.3,
+        "low": 0.6,
+        "high": 5.2,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. 'West' (non-ISO) median ~28 months but very wide IQR (~7-62); 2024 completions ~63 months. Phoenix load connection waits reported comparable to Northern Virginia for projects without power commitments."
+      },
+      "solar_cf": null,
+      "wind_cf": null,
+      "gas_price_usd_mmbtu": 2.22,
+      "grid_carbon_g_per_kwh": 320,
+      "geothermal_resource": "good",
+      "hydro_resource": "poor",
+      "industrial_power_price_usd_mwh": 77,
+      "notes": "The best US solar resource (LBNL: capacity factors highest in CA and the non-ISO West, up to ~31% averages); Ember's 24/7 solar case is Las Vegas. Nevada hosts EGS (Fervo Corsac 115 MW for Google). Industrial prices 2026 YTD: AZ 76.6, NV 84.3, NM 52.1 $/MWh. Gas 2024: AZ $2.30, NV $3.11, NM $1.02/Mcf (value = AZ). Carbon = eGRID AZNM (706 lb/MWh). Water scarcity is a cooling constraint.",
+      "src": [
+        "lbnl_queued2025",
+        "lbnl_solar2025",
+        "ember2025",
+        "thinkgeo_ctt",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "constructionowners2026"
+      ]
+    },
+    {
+      "id": "pnw",
+      "name": "Pacific Northwest (OR / WA / ID)",
+      "grid_queue_years": {
+        "value": 2.3,
+        "low": 0.6,
+        "high": 5.2,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. Uses LBNL 'West' (non-ISO) category; wide spread."
+      },
+      "solar_cf": null,
+      "wind_cf": null,
+      "gas_price_usd_mmbtu": null,
+      "grid_carbon_g_per_kwh": 288,
+      "geothermal_resource": "fair",
+      "hydro_resource": "good",
+      "industrial_power_price_usd_mwh": 72,
+      "notes": "Hydro-dominated (eGRID NWPP ~38.7% hydro); low industrial prices (WA 71.5, OR 83.3 $/MWh, 2026 YTD; value = WA). eGRID NWPP (635 lb/MWh) covers a wide area including coal-heavy states, so OR/WA-specific intensity is lower. Gas prices for OR/WA are withheld by EIA. Bloom's survey expects Oregon to lose >50% relative market share by 2028 as power availability tightens.",
+      "src": [
+        "egrid2023",
+        "eia_ind_price",
+        "lbnl_queued2025",
+        "bloom_report2026"
+      ]
+    },
+    {
+      "id": "nyiso",
+      "name": "New York (NYISO)",
+      "grid_queue_years": {
+        "value": 4.9,
+        "low": 4.2,
+        "high": 5.8,
+        "note": "Generator interconnection (IR->COD) median for projects completed 2018-2024, read approximately from LBNL Queued Up 2025 slide 48; this applies to NEW GENERATION, not load interconnection. NYISO median ~59 months (IQR ~50-70)."
+      },
+      "solar_cf": 0.19,
+      "wind_cf": 0.27,
+      "gas_price_usd_mmbtu": 2.69,
+      "grid_carbon_g_per_kwh": 218,
+      "geothermal_resource": "poor",
+      "hydro_resource": "good",
+      "industrial_power_price_usd_mwh": 102,
+      "notes": "Upstate is very clean (NYUP ~110 g/kWh; ~33% hydro, ~32% nuclear) while NYC/Long Island are gas-heavy (393-539 g/kWh); value = generation-weighted. Industrial price 102.4 $/MWh (2026 YTD). Lowest solar resource tier (LBNL), and Lazard's regional CFs are among the lowest.",
+      "src": [
+        "lbnl_queued2025",
+        "lazard2026",
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "lbnl_solar2025"
+      ]
+    },
+    {
+      "id": "isone",
+      "name": "New England (ISO-NE)",
+      "grid_queue_years": {
+        "value": null,
+        "low": null,
+        "high": null,
+        "note": "ISO-NE not shown in LBNL's regional duration chart."
+      },
+      "solar_cf": null,
+      "wind_cf": null,
+      "gas_price_usd_mmbtu": 4.83,
+      "grid_carbon_g_per_kwh": 246,
+      "geothermal_resource": "poor",
+      "hydro_resource": "fair",
+      "industrial_power_price_usd_mwh": 200,
+      "notes": "High power prices (MA 199.9, CT 185.0 $/MWh, 2026 YTD; value = MA) and pipeline-constrained gas (MA $5.00/Mcf in 2024, the highest listed). Grid ~56% gas, ~23% nuclear, ~8% hydro (eGRID NEWE). Highest wind market value ($69/MWh in 2025, LBNL) and lowest solar CFs (LBNL). Generally unattractive for large new AI loads.",
+      "src": [
+        "eia_gas_power_price",
+        "egrid2023",
+        "eia_ind_price",
+        "lbnl_wind2026",
+        "lbnl_solar2025"
+      ]
+    }
+  ],
+  "context": [
+    {
+      "fact": "US data centers used ~176 TWh (about 4.4% of US electricity) in 2023, up from 58 TWh in 2014; LBNL projects 325-580 TWh (about 6.7-12%) by 2028.",
+      "src": [
+        "doe_lbnl2024"
+      ]
+    },
+    {
+      "fact": "IEA (Apr 2025): global data centre electricity use is set to more than double to ~945 TWh by 2030, and data centres account for almost half of US electricity demand growth to 2030.",
+      "src": [
+        "iea2025"
+      ]
+    },
+    {
+      "fact": "As of end-2024, ~1,400 GW of generation and ~890 GW of storage were in US interconnection queues; the median request-to-operation time is now over 4 years (55 months for 2024 completions; ~56 months for 200+ MW projects), and only 13% of capacity requested in 2000-2019 was built.",
+      "src": [
+        "lbnl_queued2025"
+      ]
+    },
+    {
+      "fact": "JLL (2026): the average wait for a grid connection in primary US data center markets exceeds four years; a Bloom survey found utilities quote time-to-power 1.5-2 years longer than developers expect, and developers expect about one-third of data centers to run on 100% on-site power by 2030.",
+      "src": [
+        "jll2026",
+        "bloom_report2026"
+      ]
+    },
+    {
+      "fact": "Gas turbine supply is the bottleneck for new firm gas: GE Vernova held ~100 GW of gas backlog plus slot reservations in Q1 2026, with 2029-2030 slots tight and ~3-year lead times on new heavy-duty orders.",
+      "src": [
+        "powereng_gev"
+      ]
+    },
+    {
+      "fact": "ERCOT's large-load interconnection queue exceeded 233 GW by late 2025 (up ~300% in a year, >70% data centers); PJM's 2027/28 capacity auction cleared at the $333.44/MW-day cap, 6,623 MW short, with ~5,100 MW of the 5,250 MW peak-load increase from data centers.",
+      "src": [
+        "utilitydive_ercot_queue",
+        "powereng_pjm"
+      ]
+    },
+    {
+      "fact": "Lazard 2026 (unsubsidized $/MWh): utility solar 40-98, onshore wind 37-99, solar+storage 61-156, new CCGT 51-129 (a 15-year high), gas peaking 144-276, new nuclear (Vogtle-based) 175-255; illustrative nuclear restart ~71 and SMR ~214.",
+      "src": [
+        "lazard2026"
+      ]
+    },
+    {
+      "fact": "US industrial electricity averaged 9.03 c/kWh Jan-Jul 2026 vs 8.53 a year earlier (+6%); Henry Hub averaged $2.19/MMBtu in 2024 and $3.53 in 2025 (EIA STEO forecast $3.48 for 2026).",
+      "src": [
+        "eia_ind_price",
+        "eia_steo"
+      ]
+    }
+  ]
+}

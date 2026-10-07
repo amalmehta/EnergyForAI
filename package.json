@@ -1,0 +1,10 @@
+{
+  "name": "energy-for-ai",
+  "private": true,
+  "type": "module",
+  "description": "Energy for AI: where should an AI data center get its power?",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "start": "python3 scripts/serve.py 8000"
+  }
+}

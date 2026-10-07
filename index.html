@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Energy for AI</title>
+  <meta name="description" content="Where should an AI data center get its power? Compare grid, gas, solar, wind, nuclear, geothermal and more by cost, carbon, speed and reliability.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M18 2 6 18h8l-2 12 12-16h-8z' fill='%232a78d6'/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 2 6 18h8l-2 12 12-16h-8z"/></svg>
+      <span>Energy for AI</span>
+    </div>
+    <button class="icon-btn" id="openSettings" aria-label="Settings (⌘,)" title="Settings (⌘,)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Where should your AI data center get its power?</h1>
+      <p class="lede">Set your load, your deadline and your region. The explorer ranks eleven ways to power it by cost, carbon, speed to power and reliability, and every figure links to its source.</p>
+      <ul class="facts" id="facts"></ul>
+    </section>
+
+    <div class="layout">
+      <form class="controls" id="controls" aria-label="Your project">
+        <h2>Your project</h2>
+        <label class="field">
+          <span>Load <output id="loadOut"></output></span>
+          <input type="range" id="load" min="50" max="5000" step="50" value="500">
+        </label>
+        <label class="field">
+          <span>Power needed by</span>
+          <select id="neededBy"></select>
+        </label>
+        <label class="field">
+          <span>Region</span>
+          <select id="region"></select>
+        </label>
+        <p class="region-note" id="regionNote"></p>
+        <label class="check">
+          <input type="checkbox" id="firm" checked>
+          <span>Must run 24/7 without backup</span>
+        </label>
+
+        <h2>What matters most</h2>
+        <div id="weights"></div>
+        <button type="button" class="link-btn" id="resetWeights">Reset priorities</button>
+      </form>
+
+      <div class="results">
+        <section class="pick" id="pick" aria-live="polite"></section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Ranking</h2>
+            <div class="seg" role="tablist">
+              <button type="button" role="tab" aria-selected="true" data-view="list">Ranked</button>
+              <button type="button" role="tab" aria-selected="false" data-view="table">Table</button>
+            </div>
+          </div>
+          <ol class="ranking" id="ranking"></ol>
+          <div class="table-wrap" id="tableWrap" hidden></div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Cost against time to power</h2>
+            <p class="sub">Lower left is cheaper and faster. Your top three are in blue; hover any dot for details.</p>
+          </div>
+          <div class="chart" id="scatter"></div>
+        </section>
+      </div>
+    </div>
+
+    <section class="card method">
+      <h2>How the ranking works</h2>
+      <p>Each option starts from published US cost, carbon, timeline and capacity-factor ranges (see sources). The model adjusts them for your region: grid price, interconnection-queue wait and grid carbon; gas prices passed through heat rates; solar and wind cost scaled by local capacity factor; geothermal and hydro by resource quality. Projects bigger than a typical single site add friction. Each criterion is scaled 0–100 across the options and weighted by your priorities. Options that can’t meet your deadline are halved, and non-firm options are cut by 40% when you need 24/7 power. It's a screening tool, not a feasibility study.</p>
+    </section>
+
+    <section class="card sources">
+      <h2>Sources</h2>
+      <ol id="sources"></ol>
+    </section>
+  </main>
+
+  <footer class="foot">
+    Energy for AI · Figures are US ranges from public sources, as of 2026. Not investment advice. ·
+    <a href="https://github.com/amalmehta/EnergyForAI">Source on GitHub</a>
+  </footer>
+
+  <button class="feedback-tab" id="openFeedback" type="button">Feedback</button>
+
+  <dialog id="settings" aria-labelledby="settingsTitle">
+    <form method="dialog">
+      <h2 id="settingsTitle">Settings</h2>
+      <label class="field"><span>Theme</span>
+        <select id="setTheme"><option value="auto">Match system</option><option value="light">Light</option><option value="dark">Dark</option></select>
+      </label>
+      <label class="field"><span>Cost units</span>
+        <select id="setUnits"><option value="mwh">$ per MWh</option><option value="kwh">¢ per kWh</option></select>
+      </label>
+      <label class="field"><span>Carbon units</span>
+        <select id="setCarbon"><option value="g">g CO₂ per kWh</option><option value="t">t CO₂ per GWh</option></select>
+      </label>
+      <label class="check"><input type="checkbox" id="setRemember" checked><span>Remember my project inputs on this device</span></label>
+      <div class="dialog-actions">
+        <button type="button" class="link-btn" id="resetAll">Reset everything</button>
+        <button class="primary" value="close">Done</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="feedback" aria-labelledby="feedbackTitle">
+    <form method="dialog" id="feedbackForm">
+      <h2 id="feedbackTitle">Feedback</h2>
+      <p class="sub">Spotted a wrong number or missing option? This opens a pre-filled GitHub issue that you can review before you send it.</p>
+      <label class="field"><span>What's on your mind?</span><textarea id="feedbackText" rows="5" required></textarea></label>
+      <div class="dialog-actions">
+        <button type="button" class="link-btn" id="cancelFeedback">Cancel</button>
+        <button class="primary" type="submit">Open on GitHub</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
