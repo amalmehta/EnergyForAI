@@ -6,7 +6,7 @@ EnergyForAI is a static website that helps someone developing an AI data center 
 ## Build history
 
 ```mermaid
-flowchart LR
+flowchart TD
   idea["Idea: figure out energy for AI, where to get power from"]
   d1["Decision: an interactive explorer"]
   d2["Decision: audience is a data center developer"]
